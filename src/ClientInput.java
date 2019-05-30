@@ -55,9 +55,8 @@ public class ClientInput extends Socket {
         System.out.println("Connected!");
 
 
-        button.addActionListener(event -> {
-            setInput();
-        });
+        button.addActionListener(event -> setInput());
+
         inputField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
