@@ -12,6 +12,12 @@ public class Server implements Runnable {
     private boolean isActive;
     private ExecutorService executorService;
 
+    Server() throws IOException {
+        serverSocket = new ServerSocket(18757);
+        executorService = Executors.newCachedThreadPool();
+        isActive = false;
+    }
+
     private static class ServerHandler implements Runnable{
         Socket client;
         BufferedReader reader;
@@ -67,14 +73,6 @@ public class Server implements Runnable {
         }
     }
 
-
-
-    Server() throws IOException {
-        serverSocket = new ServerSocket(18757);
-        executorService = Executors.newCachedThreadPool();
-        isActive = false;
-    }
-
     public void stop() {
         try {
             isActive = false;
@@ -85,26 +83,17 @@ public class Server implements Runnable {
         }
     }
 
-
-
-
     @Override
     public void run() {
         isActive = true;
         while (isActive) {
             Socket client;
-
             try {
                 client = serverSocket.accept();
                 executorService.submit(new ServerHandler(client));
             } catch (IOException e) {
                 System.out.println("Cannot access client: " + e.getMessage());
-                continue;
             }
-
-            //Calculating
-
-
         }
     }
 }
